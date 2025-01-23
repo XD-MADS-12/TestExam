@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বিষয় নির্বাচন</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>বিষয় নির্বাচন করুন</h1>
+    </header>
+    <main>
+        <ul class="subjects">
+            <li onclick="selectSubject('পদার্থবিজ্ঞান')">পদার্থবিজ্ঞান</li>
+            <li onclick="selectSubject('রসায়ন')">রসায়ন</li>
+            <li onclick="selectSubject('জীববিজ্ঞান')">জীববিজ্ঞান</li>
+            <li onclick="selectSubject('গণিত')">গণিত</li>
+            <li onclick="selectSubject('উচ্চতর গণিত')">উচ্চতর গণিত</li>
+            <li onclick="selectSubject('বাংলা')">বাংলা</li>
+            <li onclick="selectSubject('বাংলাদেশ ও বিশ্বপরিচয়')">বাংলাদেশ ও বিশ্বপরিচয়</li>
+            <li onclick="selectSubject('আইসিটি')">আইসিটি</li>
+            <li onclick="selectSubject('ইসলাম ও নৈতিক শিক্ষা')">ইসলাম ও নৈতিক শিক্ষা</li>
+        </ul>
+    </main>
+    <script>
+        function selectSubject(subject) {
+            window.location.href = `chapters.html?subject=${encodeURIComponent(subject)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অধ্যায় নির্বাচন</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="subject-title">অধ্যায় নির্বাচন করুন</h1>
+    </header>
+    <main>
+        <ul id="chapters-list" class="chapters"></ul>
+    </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject');
+        const subjectTitle = document.getElementById('subject-title');
+        const chaptersList = document.getElementById('chapters-list');
+
+        subjectTitle.textContent = `${subject} - অধ্যায়`;
+
+        const chapters = {
+            "পদার্থবিজ্ঞান": [
+                "ভৌত জগত ও পরিমাপ",
+                "গতি",
+                "বল",
+                "কাজ, ক্ষমতা ও শক্তি",
+                "পদার্থের অবস্থা ও চাপ",
+                "তাপের প্রভাব"
+            ],
+            "রসায়ন": ["রসায়নের ধারণা", "পদার্থের অবস্থা", "পদার্থের গঠন"],
+            "জীববিজ্ঞান": ["জীবন পাঠ", "জীব কোষ ও টিস্যু"],
+        };
+
+        if (chapters[subject]) {
+            chapters[subject].forEach(chapter => {
+                const li = document.createElement('li');
+                li.textContent = chapter;
+                li.onclick = () => {
+                    window.location.href = `questions.html?chapter=${encodeURIComponent(chapter)}`;
+                };
+                chaptersList.appendChild(li);
+            });
+        } else {
+            chaptersList.innerHTML = `<p>কোনো অধ্যায় পাওয়া যায়নি।</p>`;
+        }
+    </script>
+</body>
+</html>

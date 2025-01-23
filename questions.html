@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রশ্ন উত্তর</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="chapter-title">প্রশ্ন উত্তর</h1>
+    </header>
+    <main>
+        <div id="questions-container"></div>
+        <button id="submit-btn" style="display: none;" onclick="submitTest()">উত্তর জমা দিন</button>
+        <div id="result-container" style="display: none;"></div>
+    </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const chapter = urlParams.get('chapter');
+        document.getElementById('chapter-title').textContent = `${chapter} - প্রশ্ন`;
+
+        const questions = {
+            "ভৌত জগত ও পরিমাপ": [
+                {
+                    question: "ভর পরিমাপের একক কী?",
+                    options: ["গ্রাম", "কিলোগ্রাম", "লিটার", "মিটার"],
+                    answer: 1
+                },
+                {
+                    question: "দ্রুততার একক কী?",
+                    options: ["মিটার/সেকেন্ড", "জুল", "নিউটন", "কিলোগ্রাম"],
+                    answer: 0
+                }
+            ]
+        };
+
+        const selectedQuestions = questions[chapter] || [];
+        const container = document.getElementById('questions-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+
+        if (selectedQuestions.length > 0) {
+            selectedQuestions.forEach((q, index) => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h3>${index + 1}. ${q.question}</h3>
+                    ${q.options.map((option, i) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${i}"> ${option}
+                        </label>
+                    `).join('<br>')}
+                `;
+                container.appendChild(div);
+            });
+            submitBtn.style.display = 'block';
+        } else {
+            container.innerHTML = `<p>এই অধ্যায়ের জন্য কোনো প্রশ্ন পাওয়া যায়নি।</p>`;
+        }
+
+        function submitTest() {
+            let score = 0;
+            selectedQuestions.forEach((q, index) => {
+                const answer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (answer && parseInt(answer.value) === q.answer) {
+                    score++;
+                }
+            });
+
+            container.style.display = 'none';
+            submitBtn.style.display = 'none';
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = `<h2>আপনার স্কোর: ${score}/${selectedQuestions.length}</h2>`;
+        }
+    </script>
+</body>
+</html>
